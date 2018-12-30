@@ -1,0 +1,142 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{shyner}[2018/06/03 Custom Package]
+
+\RequirePackage{amsmath}
+\RequirePackage{amsthm{
+\RequirePackage{amssymb}
+\RequirePackage{mathrsfs}
+\RequirePackage{graphicx}
+\RequirePackage{textcomp}
+\@ifclassloaded{beamer}{}		% enumitem interferes with beamer
+	{
+	\RequirePackage{enumitem}	% Only load if not a beamer doc
+	\RequirePackage{hyperref}
+	}
+
+
+% shortcuts
+
+% Number sets
+\newcommand{\N}{\mathbb{N}}		% Natural numbers
+\newcommand{\Z}{\mathbb{Z}}		% Integers
+\newcommand{\R}{\mathbb{R}}		% Real numbers
+\newcommand{\Q}{\mathbb{Q}}		% Rational numbers
+\renewcommand{\C}{\mathbb{C}}	% Complex numbers
+\renewcommand{\P}{\mathbb{P}}	% Positive numbers
+
+% Capital greek letters
+\newcommand{\Alpha}{\mathcal{A}}
+\newcommand{\Beta}{\mathcal{B}}
+\newcommand{\Epsilon}{\mathcal{E}}
+\newcommand{\Zeta}{\mathcal{Z}}
+\newcommand{\Rho}{\mathcal{P}}
+\newcommand{\Eta}{\mathcal{H}}
+\newcommand{\Kappa}{\mathcal{K}}
+\newcommand{\Mu}{\mathcal{M}}
+\newcommand{\Nu}{\mathcal{N}}
+\newcommand{\Tau}{\mathcal{T}}
+
+
+% Size adjusting grouping symbols
+\newcommand{\sag}[3]{\left#1 #2 \right#3}
+\newcommand{\Brace}[1]{\sag {\{} {#1} {\}}}         % { }
+\newcommand{\Paren}[1]{\sag {(} {#1} {)}}           % ( )
+\newcommand{\Brack}[1]{\sag {[} {#1} {]}}         	% [ ]
+\newcommand{\Abs}[1]{\sag {\lvert} {#1} {\rvert}}   % | |
+\newcommand{\Norm}[1]{\sag {\lVert} {#1} {\rVert}}  % || ||
+\newcommand{\Eval}[1]{\sag {.} {#1} {|}}            % expr|
+\newcommand{\Floor}[1]{\sag {\lfloor} {#1} {\rfloor}}	
+\newcommand{\Ceil}[1]{\sag {\lceil} {#1} {\rceil}}	
+
+% Notation
+\newcommand{\f}[1]{\mathrm{#1} \,}  % named function (i.e. \f {sin})
+\newcommand{\prm}[1]{#1^{\prime}}   % prime mark
+\newcommand{\prmd}[1]{#1^{\prime \prime}}   % double prime
+\newcommand{\prmt}[1]{#1^{\prime \prime \prime}}  %triple prime
+
+% Calculus
+\newcommand{\derivn}[3]{\frac{d^{#3}{#1}}{ d {#2}^{#3}}}	% nth degree derivitive of f by x  ... \derivn f x n
+\newcommand{\deriv}[2]{\derivn {#1} {#2} {}}		% derivative f by x ... \deriv f x
+\newcommand{\dev}[1]{\deriv {} {#1}}				% derivative by x
+\newcommand{\devn}[2]{\derivn {} {#1} {#2}}			% nth degree derivative by x ... \devn x n
+\newcommand{\pderivn}[3]{\frac{\partial^{#3}{#1}}{ \partial {#2}^{#3}}}
+\newcommand{\pderiv}[2]{\pderivn {#1} {#2} {}}
+\newcommand{\pdev}[1]{\pderiv {} {#1}}
+\newcommand{\pdevn}[2]{\pderivn {} {#1} {#2}}
+\newcommand{\dd}[1]{\, d {#1}} % Suffix to integral (i.e. dx)
+
+
+% Analysis and set theory
+\newcommand{\set}[1]{\Brace{#1}}
+\renewcommand{\implies}{\Rightarrow} % shorter implies arrow
+\renewcommand{\iff}{\Leftrightarrow} % shorter iff arrow
+\newcommand{\bd}{\f {bd}}
+\newcommand{\cl}{\f {cl}}
+\newcommand{\interior}{\f {int}}
+
+% Linear algebra
+\newcommand{\arr}[1]{\begin{matrix} #1 \end{matrix}}	% Naked matrix
+\newcommand{\mat}[1]{\begin{bmatrix} #1 \end{bmatrix}}  % Bracket matrix
+\newcommand{\pmat}[1]{\Paren{\arr {#1}}} 				% Paren matrix 
+\newcommand{\bv}[1]{\boldsymbol{#1}}  % bold vector notation
+\newcommand{\inv}{^{-1}}              % inverse suffix
+\newcommand{\trn}{^{T}}               % transpose suffix
+\newcommand{\minv}[1]{\bv{#1}\inv}    % matrix inverse
+\newcommand{\mtrn}[1]{\bv{#1}\trn}    % matrix transpose
+
+% Abstract algebra
+\newcommand{\F}{\mathbb{F}}  % Field
+\newcommand{\conmod}[3]{#1 \equiv #2 \, \Paren{\f{mod} \, #3 }} % congruent modulo
+\newcommand{\zmodz}[1]{\Z/#1 \,\Z}  % z mod z (i.e. Z/6Z)
+
+% Statistics
+\newcommand{\E}{\mathbb{E}}		% Expected value
+\newcommand{\V}{\mathbb{V}}		% Variance
+\newcommand{\var}{\f{Var}}		% Variance
+\newcommand{\cov}{\f{Cov}}		% Covariance
+\newcommand{\logit}{\f{logit}}	% logit
+
+\newcommand{\todist}{\xrightarrow{d}}	% Converge in distribution
+
+% Samples (X_1 ... X_n)
+\newcommand{\samplexab}[3]{{#1}_{#2}, \ldots, {#1}_{#3}}
+\newcommand{\sample}[2]{\samplexab{#1}{1}{#2}}
+\newcommand{\sam}[1]{\sample {#1} n}
+\newcommand{\samplexabplus}[3]{{#1}_{#2} + \cdots + {#1}_{#3}}
+\newcommand{\sampleplus}[2]{\smplexabplus{#1}{1}{#2}}
+\newcommand{\samplus}[1]{\sampleplus {#1}{n}}
+
+% Display
+\newcommand{\ds}{\displaystyle }
+
+% Text
+\newcommand{\bt}[1]{\textbf{#1}}				% Bold text in text mode
+\newcommand{\btext}[1]{\text{\bt{#1}}}			% Bold text within math mode
+\newcommand{\txtand}{\qquad \text{and}\qquad}	% put an 'and' with space between equations
+\newcommand{\txtor}{\qquad \text{or}\qquad}		% put an 'or' with space between equations
+\newcommand{\ow}{\text{otherwise}}
+
+% Tables
+% Adjust spacing in tables
+\newcommand{\tabspace}[1]{\renewcommand{\arraystretch}{#1}}	
+\newcommand{\tabspacemed}{\tabspace{1.5}}	% Add vertical space in table
+\newcommand{\tabspacedef}{\tabspace{1}}		% Return to default spacing
+
+% List styles (package enumitem interferes with beamer)
+\@ifclassloaded{beamer}{}
+	{\newenvironment{enumroman}			% Lower roman numerals
+		{\begin{enumerate}[label=\bt{(\emph{\roman*})}]}
+		{\end{enumerate}}
+	\newenvironment{enumarab}		% Arabic numerals and paren
+		{\begin{enumerate}[label=\bt{(\arabic*)}]}
+		{\end{enumerate}}
+	\newenvironment{enumalpha}		% Lower letters and paren
+		{\begin{enumerate}[label=\bt{(\alph*)}]}
+		{\end{enumerate}}
+	}
+	
+% Equations in beamer have spacing issues. Use this instead.
+\newcommand{\eq}[1]{\smallskip{\centering $\ds {#1}$ \par}\smallskip}
+
+
+\endinput
